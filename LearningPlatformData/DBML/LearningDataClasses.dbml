@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="tutorialDB" Class="LearningDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=AXT-AKASH-AWAST\MSSQLSERVER01;Initial Catalog=tutorialDB;Integrated Security=True;Trust Server Certificate=True" SettingsObjectName="LearningPlatformData.Properties.Settings" SettingsPropertyName="tutorialDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.content" Member="contents">
+    <Type Name="content">
+      <Column Name="content_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="topic_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="content_type" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="content_body" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="raw_body" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="content_ContentMedia" Member="ContentMedias" ThisKey="content_id" OtherKey="content_id" Type="ContentMedia" />
+      <Association Name="content_ContentStaging" Member="ContentStagings" ThisKey="content_id" OtherKey="content_id" Type="ContentStaging" />
+      <Association Name="topic_content" Member="topic" ThisKey="topic_id" OtherKey="topic_id" Type="topic" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ContentMedia" Member="ContentMedias">
+    <Type Name="ContentMedia">
+      <Column Name="content_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="media_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="media_order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="content_ContentMedia" Member="content" ThisKey="content_id" OtherKey="content_id" Type="content" IsForeignKey="true" />
+      <Association Name="Media_ContentMedia" Member="Media" ThisKey="media_id" OtherKey="media_id" Type="Media" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ContentStaging" Member="ContentStagings">
+    <Type Name="ContentStaging">
+      <Column Name="staging_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="content_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="raw_body" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="content_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="status" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="created_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="content_ContentStaging" Member="content" ThisKey="content_id" OtherKey="content_id" Type="content" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.courses" Member="courses">
+    <Type Name="course">
+      <Column Name="course_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="course_name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="course_topic" Member="topics" ThisKey="course_id" OtherKey="course_id" Type="topic" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Media" Member="Medias">
+    <Type Name="Media">
+      <Column Name="media_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="file_path" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="alt_text" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="media_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="uploaded_at" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Media_ContentMedia" Member="ContentMedias" ThisKey="media_id" OtherKey="media_id" Type="ContentMedia" />
+    </Type>
+  </Table>
+  <Table Name="dbo.topics" Member="topics">
+    <Type Name="topic">
+      <Column Name="topic_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="course_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="topic_title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="topic_order" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="topic_content" Member="contents" ThisKey="topic_id" OtherKey="topic_id" Type="content" />
+      <Association Name="course_topic" Member="course" ThisKey="course_id" OtherKey="course_id" Type="course" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.proc_GetTopicsByCourse" Method="proc_GetTopicsByCourse">
+    <Parameter Name="courseName" Type="System.String" DbType="NVarChar(100)" />
+    <ElementType Name="proc_GetTopicsByCourseResult">
+      <Column Name="topic_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="topic_title" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.proc_GetContentByTopicId" Method="proc_GetContentByTopicId">
+    <Parameter Name="topicId" Type="System.Int32" DbType="Int" />
+    <ElementType Name="proc_GetContentByTopicIdResult">
+      <Column Name="content_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="topic_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="content_type" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="raw_body" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="media_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="file_path" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="alt_text" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="media_type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="media_order" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>
