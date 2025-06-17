@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LearningPlatformData.DBML.proc_GetContentByTopicIdResult>
+@{
+    ViewBag.Title = "Topic Content";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+<link rel="stylesheet" href="~/Content/Content.css">
+      @section Sidebar {
+<h4>@ViewBag.CourseName Tutorials</h4>
+<ul class="nav flex-column">
+    @if (ViewBag.Topics != null && (ViewBag.Topics as IEnumerable<LearningPlatformData.DBML.proc_GetTopicsByCourseResult>).Any())
+    {
+        foreach (var topic in ViewBag.Topics as List<LearningPlatformData.DBML.proc_GetTopicsByCourseResult>)
+        {
+            if (topic.topic_id == 9)
+            {
+                <h4 class="cat-command-heading">Managing Files and Directories</h4>
+
+            }
+            if (topic.topic_id == 15)
+            {
+                <h4 class="cat-command-heading"> Users, Groups, and Permissions</h4>
+            }
+
+            <li class="nav-item">
+                <a class="nav-link @(topic.topic_id == ViewBag.SelectedTopicId ? "active" : "")"
+                   href="@Url.Action("Content", "Tutorial", new { topicId = topic.topic_id })">@topic.topic_title</a>
+            </li>
+            }
+            }
+            else
+            {
+            <li>No topics available for this course.</li>
+            }
+        </ul>
+}
+
+<div class="content-body">
+    @foreach (var contentItem in Model)
+    {
+        <div class="mb-4 content-section">
+            <h2 class="content-heading">@contentItem.title</h2>
+            <div class="content-text">@Html.Raw(contentItem.raw_body)</div>
+            @if (contentItem.media_type == "image")
+            {
+                <div class="architecture-container">
+                    <div class="image-wrapper">
+                        <img src="@contentItem.file_path" alt="@contentItem.alt_text" class="custom-image" />
+                    </div>
+                </div>
+            }
+           
+        </div>
+    }
+</div>

@@ -1,0 +1,22 @@
+﻿@model List<LearningPlatformData.DBML.proc_GetTopicsByCourseResult>
+@{
+    ViewBag.Title = ViewBag.CourseName;
+    ViewBag.ShowSidebar = true; 
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+@section Sidebar {
+    <h4>@ViewBag.CourseName Tutorial</h4>
+    <ul class="nav flex-column">
+        @foreach (var topic in Model)
+        {
+
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Content", "Tutorial", new { topicId = topic.topic_id })">@topic.topic_title</a>
+            </li>
+        }
+    </ul>
+}
+
+<h2>Welcome to @ViewBag.CourseName</h2>
+<p>Select a topic from the sidebar to view content.</p>
