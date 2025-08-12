@@ -1,6 +1,69 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h2>Master DevOps with Hands-On Tutorials</h2>
+        <p>Learn CI/CD, Docker, Kubernetes, and more from industry experts.</p>
+        <a href="/tutorials" class="btn">Explore Tutorials</a>
+    </div>
+</section>
 
-<h2>Welcome to  Tutorials</h2>
-<p>Explore our courses to learn technologies.</p>
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <h2>Why Learn DevOps with Us?</h2>
+        <div class="feature-grid">
+            <div class chalkboard">
+                <h3>Practical Learning</h3>
+                <p>Hands-on labs with real-world DevOps tools like Jenkins and Ansible.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Expert-Led Content</h3>
+                <p>Curated by DevOps professionals with years of experience.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Certification Path</h3>
+                <p>Earn credentials to boost your career in DevOps.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tutorials Section -->
+<section class="tutorials">
+    <div class="container">
+        <h2>Popular DevOps Tutorials</h2>
+        <div class="tutorial-grid">
+            <div class="tutorial-card">
+                <img src="https://via.placeholder.com/300x150?text=CI/CD" alt="CI/CD Tutorial" />
+                <h3>CI/CD with Jenkins</h3>
+                <p>Learn to automate builds and deployments with Jenkins pipelines.</p>
+                <a href="/tutorials/ci-cd" class="btn">Start Tutorial</a>
+            </div>
+            <div class="tutorial-card">
+                <img src="https://via.placeholder.com/300x150?text=Docker" alt="Docker Tutorial" />
+                <h3>Docker Essentials</h3>
+                <p>Master containerization with Docker for scalable applications.</p>
+                <a href="/tutorials/docker" class="btn">Start Tutorial</a>
+            </div>
+            <div class="tutorial-card">
+                <img src="https://via.placeholder.com/300x150?text=Kubernetes" alt="Kubernetes Tutorial" />
+                <h3>Kubernetes Fundamentals</h3>
+                <p>Orchestrate containers with Kubernetes for production-grade apps.</p>
+                <a href="/tutorials/kubernetes" class="btn">Start Tutorial</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <h2>Join Our DevOps Community</h2>
+        <p>Connect with experts and get access to exclusive resources.</p>
+        <a href="/signup" class="btn">Sign Up Now</a>
+    </div>
+</section>
+<link href="~/Content/Index.css" rel="stylesheet">
